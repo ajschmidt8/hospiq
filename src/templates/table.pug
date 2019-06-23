@@ -1,0 +1,18 @@
+table.ui.sortable.celled.table.striped.center.aligned
+  thead
+    tr
+      th(data-sort="alphanum") ID
+      th(data-sort="string") Name
+      th(data-sort="int") Census
+      th(data-sort="int") Capacity
+      th(data-sort="alphanum") Low Alarm
+      th(data-sort="alphanum") High Alarm
+  tbody
+    each unit in units
+      tr
+        td= unit.id
+        td= unit.name
+        td= unit.census
+        td= unit.capacity
+        td #{unit.lowAlarm || "-"}
+        td #{unit.highAlarm || "-"}
