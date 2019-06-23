@@ -4,7 +4,8 @@ import templates from '../templates/templates';
 export default units => {
   // Add table to DOM
   const tableHtml = templates.table({ units });
-  document.getElementById('table-container').innerHTML = tableHtml;
+  document.querySelector('tbody').innerHTML = tableHtml;
+  document.querySelector('table').classList.add('sortable');
 
   // Set sort order
   $.tablesort.defaults.compare = (a, b) => {

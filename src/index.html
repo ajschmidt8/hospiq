@@ -11,7 +11,31 @@
     />
   </head>
   <body>
-    <div>hello world</div>
-    <div id="table-container" class="ui container"></div>
+    <div class="ui container page__container">
+      <h1>
+        Hospital IQ
+      </h1>
+      <p class="page__info">
+        View each unit's occupancy information in the table below. Units
+        highlighted in yellow require attention.
+      </p>
+      <table class="ui celled table striped center aligned">
+        <thead>
+          <tr>
+            <th class="two wide">ID</th>
+            <th>Name</th>
+            <th class="two wide">Census</th>
+            <th class="two wide">Capacity</th>
+            <th class="two wide">Low Alarm</th>
+            <th class="two wide">High Alarm</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="6">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

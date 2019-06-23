@@ -1,18 +1,22 @@
-table.ui.sortable.celled.table.striped.center.aligned
-  thead
-    tr
-      th.two.wide ID
-      th Name
-      th.two.wide Census
-      th.two.wide Capacity
-      th.two.wide Low Alarm
-      th.two.wide High Alarm
-  tbody
-    each unit in units
-      tr
-        td= unit.id
-        td= unit.name
-        td= unit.census
-        td= unit.capacity
-        td #{unit.lowAlarm || "-"}
-        td #{unit.highAlarm || "-"}
+each unit in units
+  -
+    const classes = [];
+    const lowWarning = unit.lowAlarm && unit.census <= unit.lowAlarm;
+    const highWarning = unit.highAlarm && unit.census >= unit.highAlarm;
+    if (lowWarning || highWarning) classes.push('warning');
+  tr(class=classes)
+    td= unit.id
+    td= unit.name
+    td
+      if highWarning || lowWarning
+        i.attention.icon
+      | #{unit.census}
+    td= unit.capacity
+    td
+      if lowWarning
+        i.attention.icon
+      | #{unit.lowAlarm || "-"}
+    td
+      if highWarning
+        i.attention.icon
+      | #{unit.highAlarm || "-"}
