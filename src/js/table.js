@@ -1,4 +1,4 @@
-import 'stupid-table-plugin';
+import './vendor/tablesort';
 import templates from '../templates/templates';
 
 export default units => {
@@ -6,31 +6,23 @@ export default units => {
   const tableHtml = templates.table({ units });
   document.getElementById('table-container').innerHTML = tableHtml;
 
-  // Make data sortable
-  const table = $('table').stupidtable({
-    alphanum: (a, b) => {
-      const aIsNumber = parseInt(a);
-      const bIsNumber = parseInt(b);
-      const bothNumbers = aIsNumber && bIsNumber;
-      const bothStrings = !aIsNumber && !bIsNumber;
-      if (bothNumbers) return parseInt(a) - parseInt(b);
-      if (bothStrings) return a - b;
-      if (aIsNumber) return -1;
-      if (bIsNumber) return 1;
+  // Set sort order
+  $.tablesort.defaults.compare = (a, b) => {
+    const aIsNumber = parseInt(a);
+    const bIsNumber = parseInt(b);
+    const bothNumbers = aIsNumber && bIsNumber;
+    const bothStrings = !aIsNumber && !bIsNumber;
+
+    if (bothNumbers) return parseInt(a) - parseInt(b);
+    if (bothStrings) {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
     }
-  });
+    if (aIsNumber) return -1;
+    if (bIsNumber) return 1;
+  };
 
-  // Add sorting indicator classes
-  table.bind('aftertablesort', (event, { direction, $th }) => {
-    const dir = direction === 'asc' ? 'ascending' : 'descending';
-    $th.addClass(`sorted ${dir}`);
-    $th.removeClass(`sorting-asc sorting-desc`);
-  });
-
-  table.bind('beforetablesort', (event, { direction, $th }) => {
-    $th
-      .parent()
-      .children('th')
-      .removeClass(`sorting-asc sorting-desc sorted ascending descending`);
-  });
+  // Make table sortable
+  $('table').tablesort();
 };
